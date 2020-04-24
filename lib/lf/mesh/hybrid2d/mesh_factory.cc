@@ -53,9 +53,12 @@ MeshFactory::size_type MeshFactory::AddEntity(
     unsigned char count = 0;
     for (auto& n : nodes) {
       LF_ASSERT_MSG(n < nodes_.size(),
-                    "node " << n
-                            << " specified in call to AddEntity must be "
-                               "inserted with AddPoint() first.");
+                    "MeshFactory::AddEntity(EDGE): node "
+                        << n
+                        << " specified in call to AddEntity must be "
+                           "inserted with AddPoint() first! "
+                        << "nodes = [" << nodes[0] << ',' << nodes[1]
+                        << "] vs. nodes_.size() = " << nodes_.size());
       LF_ASSERT_MSG(
           count < 2,
           "ref_el = segment, but nodes contains more than 2 node indices");
@@ -77,8 +80,9 @@ MeshFactory::size_type MeshFactory::AddEntity(
                   "ref_el = " << ref_el << ", but nodes contains " << count + 1
                               << "node indices");
     LF_ASSERT_MSG(n < nodes_.size(),
-                  " Node " << n << " for " << ref_el.ToString()
-                           << "  must be inserted with AddNode() first.");
+                  "MeshFactory::AddEntity(CELL): node "
+                      << n << " for " << ref_el.ToString()
+                      << "  must be inserted with AddNode() first.");
     ns[count] = n;
     ++count;
   }
